@@ -1,0 +1,32 @@
+{
+    "version": 8,
+    "configurePresets": [
+        {
+            "name": "Visual Studio 2022 - amd64",
+            "description": "将编译器用于 Visual Studio 17 2022 (x64 体系结构)",
+            "generator": "Visual Studio 17 2022",
+            "toolset": "host=x64",
+            "architecture": "x64",
+            "binaryDir": "${sourceDir}/Output/Build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/Output/Install/${presetName}",
+                "CMAKE_C_COMPILER": "cl.exe",
+                "CMAKE_CXX_COMPILER": "cl.exe"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "Visual Studio 2022 - amd64 - Debug",
+            "displayName": "Visual Studio 2022 - amd64 - Debug",
+            "configurePreset": "Visual Studio 2022 - amd64",
+            "configuration": "Debug"
+        },
+        {
+            "name": "Visual Studio 2022 - amd64 - Release",
+            "displayName": "Visual Studio 2022 - amd64 - Release",
+            "configurePreset": "Visual Studio 2022 - amd64",
+            "configuration": "Release"
+        }
+    ]
+}
