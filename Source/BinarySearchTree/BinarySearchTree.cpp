@@ -58,6 +58,12 @@ public:
         }
     }
 
+    // 是否存在
+    bool contains(const T& x) const
+    {
+        return this->contains(x, root);
+    }
+
 private:
     struct BinaryNode
     {
@@ -144,6 +150,28 @@ private:
 
         return this->findMax(t->right);
     }
+
+    // 是否存在
+    bool contains(const T& x, BinaryNode* t) const
+    {
+        if (nullptr == t)
+        {
+            return false;
+        }
+
+        if (x < t->element)
+        {
+            return this->contains(x, t->left);
+        }
+        else if (x > t->element)
+        {
+            return this->contains(x, t->right);
+        }
+        else
+        {
+            return true;
+        }
+    }
 };
 
 // 打印最值
@@ -178,7 +206,9 @@ int main()
 
     std::cout << "=====初始化完成=====" << std::endl;
 
+    int x = 12;
     std::cout << "是否为空:" << bst.isEmpty() << std::endl;
+    std::cout << "是否存在" << x << ": " << bst.contains(x) << std::endl;
 
     printMaxMin(bst);
 
@@ -194,6 +224,7 @@ int main()
     bst.insert(5);
 
     std::cout << "是否为空:" << bst.isEmpty() << std::endl;
+    std::cout << "是否存在" << x << ": " << bst.contains(x) << std::endl;
 
     printMaxMin(bst);
 
@@ -202,4 +233,5 @@ int main()
     bst.makeEmpty();
 
     std::cout << "是否为空:" << bst.isEmpty() << std::endl;
+    std::cout << "是否存在" << x << ": " << bst.contains(x) << std::endl;
 }
