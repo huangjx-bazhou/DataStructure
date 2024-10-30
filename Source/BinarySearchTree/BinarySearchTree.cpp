@@ -28,6 +28,12 @@ public:
         this->insert(x, root);
     }
 
+    // 删除
+    void remove(const T& x)
+    {
+        this->remove(x, root);
+    }
+
     // 查找最小值
     bool findMin(T& min) const
     {
@@ -119,6 +125,39 @@ private:
         }
     }
 
+    // 删除
+    void remove(const T& x, BinaryNode*& t)
+    {
+        if (nullptr == t)
+        {
+            return;
+        }
+
+        if (x < t->element)
+        {
+            this->remove(x, t->left);
+        }
+        else if (x > t->element)
+        {
+            this->remove(x, t->right);
+        }
+        else
+        {
+            if (t->left && t->right)
+            {
+                // 有两个儿子
+                t->element = this->findMin(t->right)->element;
+                this->remove(t->element, t->right);
+            }
+            else
+            {
+                BinaryNode* old = t;
+                t = (t->left != nullptr) ? t->left : t->right;
+                delete old;
+            }
+        }
+    }
+
     // 查找最小值
     BinaryNode* findMin(BinaryNode* t) const
     {
@@ -206,7 +245,7 @@ int main()
 
     std::cout << "=====初始化完成=====" << std::endl;
 
-    int x = 12;
+    int x = 17;
     std::cout << "是否为空:" << bst.isEmpty() << std::endl;
     std::cout << "是否存在" << x << ": " << bst.contains(x) << std::endl;
 
@@ -226,6 +265,13 @@ int main()
     std::cout << "是否为空:" << bst.isEmpty() << std::endl;
     std::cout << "是否存在" << x << ": " << bst.contains(x) << std::endl;
 
+    printMaxMin(bst);
+
+    std::cout << "=====删除=====" << std::endl;
+
+    bst.remove(x);
+    std::cout << "是否为空:" << bst.isEmpty() << std::endl;
+    std::cout << "是否存在" << x << ": " << bst.contains(x) << std::endl;
     printMaxMin(bst);
 
     std::cout << "=====置空=====" << std::endl;
