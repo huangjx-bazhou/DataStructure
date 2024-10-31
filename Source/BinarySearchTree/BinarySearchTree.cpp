@@ -5,6 +5,7 @@ class BinarySearchTree
 {
 public:
     BinarySearchTree() : root(nullptr) {}
+    BinarySearchTree(const BinarySearchTree& other) : root(this->clone(other.root)) {}
     ~BinarySearchTree()
     {
         this->makeEmpty();
@@ -68,6 +69,14 @@ public:
     bool contains(const T& x) const
     {
         return this->contains(x, root);
+    }
+
+    // 打印
+    void printTree() const
+    {   
+        std::cout << "中序遍历" << std::endl;
+        this->printTree(root);
+        std::cout << std::endl;
     }
 
 private:
@@ -211,6 +220,33 @@ private:
             return true;
         }
     }
+
+    // 打印
+    void printTree(BinaryNode* t) const
+    {
+        if (nullptr == t)
+        {
+            return;
+        }
+
+        this->printTree(t->left);
+
+        std::cout << t->element << " ";
+
+        this->printTree(t->right);
+    }
+
+    BinaryNode* clone(BinaryNode* t) const
+    {
+        if (nullptr == t)
+        {
+            return nullptr;
+        }
+        else
+        {
+            return new BinaryNode(t->element, this->clone(t->left), this->clone(t->right));
+        }
+    }
 };
 
 // 打印最值
@@ -262,6 +298,9 @@ int main()
     bst.insert(3);
     bst.insert(5);
 
+    BinarySearchTree<int> bst2(bst);
+    
+    bst.printTree();
     std::cout << "是否为空:" << bst.isEmpty() << std::endl;
     std::cout << "是否存在" << x << ": " << bst.contains(x) << std::endl;
 
@@ -280,4 +319,11 @@ int main()
 
     std::cout << "是否为空:" << bst.isEmpty() << std::endl;
     std::cout << "是否存在" << x << ": " << bst.contains(x) << std::endl;
+
+    
+    bst2.remove(13);
+    bst2.remove(13);
+    bst2.remove(1);
+    bst2.remove(5);
+    bst2.printTree();
 }
